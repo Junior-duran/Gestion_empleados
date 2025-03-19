@@ -70,15 +70,16 @@ namespace Gestion_empleados
                 txt_edad.Text = edad.ToString();
                 txt_salario.Text = salario.ToString();
                 cmb_cargo.Text = cargo;
-
+                // Verificar si los campos de texto no están vacíos
                 if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrEmpty(apellido) || string.IsNullOrEmpty(cargo))
                 {
                     MessageBox.Show("Todos los campos son obligatorios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                Empleado nuevoEmpleado = null; // Inicializar la variable
+                Empleado nuevoEmpleado = null; // inicializacion de la variable nuevoEmpleado para evitar errores de compilacion
 
+                // Crear un nuevo empleado dependiendo del cargo seleccionado
                 if (cargo == "Administrativo")
                 {
                     nuevoEmpleado = new Administrativo(nombre, apellido, edad, salario);
@@ -93,9 +94,11 @@ namespace Gestion_empleados
                     return;
                 }
 
-                empresa.RegistrarEmpleado(nuevoEmpleado);
+                empresa.RegistrarEmpleado(nuevoEmpleado); // Registrar el nuevo empleado en la empresa
                 dgvEmpleado.DataSource = null;
-                dgvEmpleado.DataSource = empresa.Empleados;
+                dgvEmpleado.DataSource = empresa.Empleados; // Refrescar el DataGridView con la lista actualizada de empleados
+
+                // Limpiar los campos de texto
                 txt_nombre.Clear();
                 txt_apellido.Clear();
                 txt_edad.Clear();
@@ -113,7 +116,7 @@ namespace Gestion_empleados
         }
         void btn_eliminar_Click(object sender, EventArgs e)
         {
-            if (dgvEmpleado.SelectedRows.Count == 0)
+            if (dgvEmpleado.SelectedRows.Count == 0) // Verificar si se ha seleccionado un empleado
             {
                 MessageBox.Show("Seleccione un empleado para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -124,13 +127,13 @@ namespace Gestion_empleados
 
             if (resultado == DialogResult.Yes)
             {
-                int index = dgvEmpleado.SelectedRows[0].Index;
-                empresa.eliminarEmpleado(index);
+                int index = dgvEmpleado.SelectedRows[0].Index; // Obtener el índice del empleado seleccionado
+                empresa.eliminarEmpleado(index); // Eliminar el empleado
                 dgvEmpleado.DataSource = null;
-                dgvEmpleado.DataSource = empresa.Empleados;
+                dgvEmpleado.DataSource = empresa.Empleados; // refrescar el DataGridView
             }
         }
-        
+
 
         public void eliminarEmpleado(int index)
         {
@@ -146,6 +149,7 @@ namespace Gestion_empleados
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Verifica si se ha seleccionado un cargo válido
             if (cargo == "Administrativo") ;
             if (cargo == " Tecnico") ;
         }
